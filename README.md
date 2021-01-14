@@ -4,6 +4,11 @@ The MicroPython project
   <img src="https://raw.githubusercontent.com/pycom/LoPy/master/images/LopySide.jpg" alt="The LoPy"/>
 </p>
 
+# Note
+This branch creates changes to enable 802.11LR in MircoPython and is based on 1.20.2.r4 due to some issue with BT on newer versions.
+These changes were made to allow the HMI (part of EIS) to use LR on the horse nodes.
+---
+
 This is the MicroPython project, which aims to put an implementation
 of Python 3.x on microcontrollers and small embedded systems.
 You can find the official website at [micropython.org](http://www.micropython.org).
