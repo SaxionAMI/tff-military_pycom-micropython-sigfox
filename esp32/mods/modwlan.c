@@ -1846,7 +1846,7 @@ STATIC mp_obj_t wlan_wifi_protocol (mp_uint_t n_args, const mp_obj_t *args)
 {
 
     STATIC const qstr wlan_protocol_fields[] = {
-        MP_QSTR_protocol_11B, MP_QSTR_protocol_11G, MP_QSTR_protocol_11N
+        MP_QSTR_protocol_11B, MP_QSTR_protocol_11G, MP_QSTR_protocol_11N, MP_QSTR_protocol_LOW_RATE
     };
 
     wlan_obj_t *self = args[0];
@@ -1874,8 +1874,9 @@ STATIC mp_obj_t wlan_wifi_protocol (mp_uint_t n_args, const mp_obj_t *args)
             nlr_raise(mp_obj_new_exception_msg(&mp_type_OSError, mpexception_os_operation_failed));
         }
 
-        mp_obj_t tuple[3] =
+        mp_obj_t tuple[4] =
         {
+            mp_obj_new_bool(0),
             mp_obj_new_bool(0),
             mp_obj_new_bool(0),
             mp_obj_new_bool(0)
@@ -1896,7 +1897,12 @@ STATIC mp_obj_t wlan_wifi_protocol (mp_uint_t n_args, const mp_obj_t *args)
             tuple[2] = mp_obj_new_bool(1);
         }
 
-        return mp_obj_new_attrtuple(wlan_protocol_fields, 3, tuple);
+        if(bitmap & WIFI_PROTOCOL_LR)
+        {
+            tuple[3] = mp_obj_new_bool(1);
+        }
+
+        return mp_obj_new_attrtuple(wlan_protocol_fields, 4, tuple);
     }
     else
     {
@@ -1905,7 +1911,7 @@ STATIC mp_obj_t wlan_wifi_protocol (mp_uint_t n_args, const mp_obj_t *args)
             nlr_raise(mp_obj_new_exception_msg(&mp_type_TypeError, mpexception_num_type_invalid_arguments));
         }
 
-        size_t tuple_len = 3;
+        size_t tuple_len = 4;
         mp_obj_t *tuple = NULL;
         mp_obj_tuple_get(args[1], &tuple_len, &tuple);
 
@@ -1924,6 +1930,11 @@ STATIC mp_obj_t wlan_wifi_protocol (mp_uint_t n_args, const mp_obj_t *args)
         if(mp_obj_is_true(tuple[2]))
         {
             bitmap |= WIFI_PROTOCOL_11N;
+        }
+
+        if(mp_obj_is_true(tuple[3]))
+        {
+            bitmap |= WIFI_PROTOCOL_LR;
         }
 
         esp_err_t err = esp_wifi_set_protocol(interface, bitmap);
