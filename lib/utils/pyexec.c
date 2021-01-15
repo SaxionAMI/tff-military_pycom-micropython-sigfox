@@ -421,6 +421,7 @@ int pyexec_friendly_repl(void) {
 
 friendly_repl_reset:
     mp_hal_stdout_tx_str("Pycom MicroPython " SW_VERSION_NUMBER " [" MICROPY_GIT_TAG "] on " MICROPY_BUILD_DATE "; " MICROPY_HW_BOARD_NAME " with " MICROPY_HW_MCU_NAME "\r\n");
+	mp_hal_stdout_tx_str("Patched by Thymo van Beers for the Ambient Intelligence research group at Saxion University of Applied Sciences to enable 802.11LR.\r\n");
 #if (VARIANT == PYBYTES)
     if (config_get_pybytes_autostart()) {
         mp_hal_stdout_tx_str("Pybytes Version: " PYBYTES_VERSION_NUMBER "\r\n");

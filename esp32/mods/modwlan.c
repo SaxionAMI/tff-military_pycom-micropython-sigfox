@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2020, Pycom Limited.
+ * Copyright (c) 2021, Thymo van Beers.
  *
  * This software is licensed under the GNU GPL version 3 or any
  * later version, with permitted additional terms. For more information
